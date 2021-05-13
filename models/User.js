@@ -11,7 +11,7 @@
 
 const { Schema, model } = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
-const { hashPassword } = require('../Auth');
+const { hashPassword } = require('../lib/Auth');
 
 const { Mixed } = Schema.Types;
 
