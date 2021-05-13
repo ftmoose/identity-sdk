@@ -11,6 +11,7 @@
 
 const { Schema, model } = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const { hashPassword } = require('../Auth');
 
 const { Mixed } = Schema.Types;
 
@@ -63,7 +64,13 @@ const UserSchema = Schema({
     },
     required: [true, 'username required'],
   },
-  password: { type: String, required: true },
+  password: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (value) => value.length > 0,
+    },
+  },
   name: { type: String },
   given_name: { type: String },
   family_name: { type: String },
@@ -88,15 +95,17 @@ module.exports = model('User', UserSchema);
  * @returns {Promise} Promise
  * @public
  */
-UserSchema.statics.addUser = function addUser(newUserObject) {
+UserSchema.statics.addUser = async function addUser(newUserObject) {
   if (!newUserObject || typeof newUserObject !== 'object') {
     throw new TypeError('user object expected as parameter');
   }
 
   const rightNow = new Date();
+  const passwordHash = newUserObject.password ? await hashPassword(newUserObject.password) : null;
 
   const startingFields = {
     user_id: uuidv4(),
+    password: passwordHash,
     last_login: null,
     last_password_reset: null,
     updated_at: rightNow,
