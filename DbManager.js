@@ -32,6 +32,23 @@ Object.defineProperty(DbManager, 'dbOptions', {
 });
 
 /**
+ * Initialize an admin user if not already created
+ * @returns {Promise} Promise
+ * @private
+ */
+function createAdminUser() {
+  const newUserObject = {
+    username: 'admin',
+    name: 'admin',
+    given_name: 'admin',
+    family_name: 'admin',
+    nickname: 'admin',
+  };
+
+  DbManager.addUser(newUserObject);
+}
+
+/**
  * Connect to the database
  * @param {String} dbHostname
  * @param {Number} dbPort
@@ -41,10 +58,13 @@ Object.defineProperty(DbManager, 'dbOptions', {
  * @public
  */
 
-DbManager.connect = function connect(dbHostname, dbPort, dbName, callback) {
+DbManager.connect = function connect(dbHostname, dbPort, dbName, initAdmin = true, callback) {
   mongoose
     .connect(`mongodb://${dbHostname}:${dbPort}/${dbName}`, this.dbOptions)
     .then(() => {
+      if (initAdmin) {
+        createAdminUser();
+      }
       if (callback && typeof callback === 'function') {
         callback();
       }
