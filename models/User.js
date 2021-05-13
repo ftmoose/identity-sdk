@@ -15,9 +15,22 @@ const { v4: uuidv4 } = require('uuid');
 const { Mixed } = Schema.Types;
 
 /**
+ * Check if value conforms to username requirements
+ *  - first character is a letter
+ *  - all letters are lowercase
+ *  - number(s) (optional)
+ *  - underscore (optional)
+ * @param {String} value
+ * @returns {Boolean} True if value conforms to requirements
+ */
+function isValidUsername(value) {
+  return /^[a-z][a-z0-9]*(_[a-z0-9]*)?$/.test(value);
+}
+
+/**
  * User Schema
  * @param {String} user_id  User's unique identifier
- * @param {String} username User's username
+ * @param {String} username User's username, lowercase letters, numbers and _
  * @param {String} password Hashed value of user's password
  * @param {String} name User's full name
  * @param {String} given_name User's given name
@@ -40,9 +53,17 @@ const { Mixed } = Schema.Types;
  */
 
 const UserSchema = Schema({
-  user_id: { type: String, unique: true },
-  username: { type: String, unique: true },
-  password: { type: String },
+  user_id: { type: String, unique: true, required: true },
+  username: {
+    type: String,
+    unique: true,
+    validate: {
+      validator: isValidUsername,
+      message: 'invalid username',
+    },
+    required: [true, 'username required'],
+  },
+  password: { type: String, required: true },
   name: { type: String },
   given_name: { type: String },
   family_name: { type: String },
@@ -56,8 +77,8 @@ const UserSchema = Schema({
   identities: [{ type: Mixed }],
   last_login: { type: Date },
   last_password_reset: { type: Date },
-  updated_at: { type: Date },
-  created_at: { type: Date },
+  updated_at: { type: Date, required: true },
+  created_at: { type: Date, required: true },
 });
 module.exports = model('User', UserSchema);
 
@@ -68,6 +89,10 @@ module.exports = model('User', UserSchema);
  * @public
  */
 UserSchema.statics.addUser = function addUser(newUserObject) {
+  if (!newUserObject || typeof newUserObject !== 'object') {
+    throw new TypeError('user object expected as parameter');
+  }
+
   const rightNow = new Date();
 
   const startingFields = {
