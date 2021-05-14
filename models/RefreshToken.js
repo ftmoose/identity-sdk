@@ -8,7 +8,7 @@
  * Model Dependencies
  */
 const { Schema, model } = require('mongoose');
-const User = require('../models/User');
+const User = require('./User');
 
 const { ObjectId } = Schema.Types;
 
