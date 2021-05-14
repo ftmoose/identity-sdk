@@ -6,7 +6,6 @@
 
 /**
  * Module Dependencies
- * @private
  */
 
 const { Schema, model } = require('mongoose');
