@@ -5,7 +5,7 @@
  */
 
 /**
- * Module Dependencies
+ * Model Dependencies
  */
 
 const { Schema, model } = require('mongoose');
@@ -51,7 +51,6 @@ function isValidUsername(value) {
  * @param {Date} created_at Timestamp indicating when the user profile was first created
  * @private
  */
-
 const UserSchema = Schema({
   user_id: { type: String, unique: true, required: true },
   username: {
