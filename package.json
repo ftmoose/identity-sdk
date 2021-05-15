@@ -6,7 +6,18 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
-  "author": "Mostapha Rammo",
+  "author": {
+    "name": "Mostapha Rammo",
+    "email": "mr.rammo@gmail.com",
+    "url": "https://mrammo.ca"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rammom/identity-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rammom/identity-sdk/issues"
+  },
   "keywords": [
     "express",
     "auth",
@@ -16,6 +27,12 @@
     "sdk"
   ],
   "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
   "devDependencies": {
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
