@@ -1,7 +1,7 @@
 {
   "name": "identity-sdk",
-  "version": "1.0.0",
-  "description": "identity authentication sdk for node apps",
+  "version": "0.0.1",
+  "description": "An authentication sdk for node.js applications using mongodb",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
