@@ -7,7 +7,15 @@
     "test": "./node_modules/.bin/mocha"
   },
   "author": "Mostapha Rammo",
-  "license": "ISC",
+  "keywords": [
+    "express",
+    "auth",
+    "identity",
+    "authn",
+    "authentication",
+    "sdk"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
