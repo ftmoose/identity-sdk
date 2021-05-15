@@ -21,13 +21,23 @@ $ npm install identity-sdk
 * [License](#license)
 
 ### Adding Identity to your application
+
+To add and initialize Identity to your application, just pass in your database information.
+
+`dbHostname`: MongoDB hostname (ex. localhost)<br>
+`dbPort`: MongoDB port (ex. 27017)<br>
+`dbName`: MongoDB database name (ex. Identity)<br>
+`initAdmin`: **(optional)** if `true` creates an admin user on init<br>
+`dbConnectCallback`: **(optional)** function called once connected to the database<br>
+
+
 ```javascript
-const Identity = require('identity-sdk').init();
+const Identity = require('identity-sdk').init(dbHostname, dbPort, dbName, initAdmin, dbConnectCallback);
 
 // or
 
 const Identity = require('identity-sdk');
-Identity.init();
+Identity.init(dbHostname, dbPort, dbName, initAdmin, dbConnectCallback);
 ```
 
 ### Log a user in
