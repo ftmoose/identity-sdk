@@ -18,7 +18,6 @@ const RefreshTokenSchema = Schema({
   updated_at: { type: Date, required: true },
   created_at: { type: Date, required: true },
 });
-module.exports = model('RefreshToken', RefreshTokenSchema);
 
 /**
  * Create a new refresh token for user
@@ -26,10 +25,6 @@ module.exports = model('RefreshToken', RefreshTokenSchema);
  * @param {String} refreshToken token to be added
  */
 RefreshTokenSchema.statics.addRefreshToken = async function addRefreshToken(userId, refreshToken) {
-  if (!userId || typeof userId !== 'string' || !refreshToken || typeof refreshToken !== 'string') {
-    throw new TypeError('userId and refreshToken required');
-  }
-
   const user = await User.findById(userId);
 
   const rightNow = new Date();
@@ -49,10 +44,6 @@ RefreshTokenSchema.statics.addRefreshToken = async function addRefreshToken(user
  * @param {String} refreshToken token to be deleted
  */
 RefreshTokenSchema.statics.removeRefreshToken = async function removeRefreshToken(refreshToken) {
-  if (!refreshToken || typeof refreshToken !== 'string') {
-    throw new TypeError('refreshToken string required');
-  }
-
   await this.deleteOne({ token: refreshToken });
 };
 
@@ -62,9 +53,7 @@ RefreshTokenSchema.statics.removeRefreshToken = async function removeRefreshToke
  */
 RefreshTokenSchema.statics.removeRefreshTokensByUserId = async function
 removeRefreshTokensByUserId(userId) {
-  if (!userId || typeof userId !== 'string') {
-    throw new TypeError('userId string required');
-  }
-
   await this.deleteMany({ user: userId });
 };
+
+module.exports = model('RefreshToken', RefreshTokenSchema);

@@ -85,7 +85,6 @@ const UserSchema = Schema({
   updated_at: { type: Date, required: true },
   created_at: { type: Date, required: true },
 });
-module.exports = model('User', UserSchema);
 
 /**
  * Create a new User document
@@ -113,3 +112,5 @@ UserSchema.statics.addUser = async function addUser(newUserObject) {
   const newUser = new this({ ...newUserObject, ...startingFields });
   return newUser.save();
 };
+
+module.exports = model('User', UserSchema);
